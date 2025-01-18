@@ -10,8 +10,8 @@
 		"email": "sindresorhus@gmail.com",
 		"url": "https://sindresorhus.com"
 	},
-	"main": "./dist/index.cjs",
-	"module": "./dist/index.js",
+	"main": "./dist/index.d.cjs",
+	"module": "./dist/index.d.js",
 	"types": "./dist/index.d.ts",
 	"files": [
 		"dist"
@@ -50,8 +50,8 @@
 	"exports": {
 		"import": {
 			"types": "./dist/index.d.ts",
-			"default": "./dist/index.js"
+			"default": "./dist/index.d.js"
 		},
-		"require": "./dist/index.cjs"
+		"require": "./dist/index.d.cjs"
 	}
 }
