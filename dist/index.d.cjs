@@ -1,5 +1,4 @@
 "use strict";Object.defineProperty(exports, "__esModule", {value: true}); function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }// filenamify.js
-var _filenamereservedregex = require('filename-reserved-regex'); var _filenamereservedregex2 = _interopRequireDefault(_filenamereservedregex);
 var MAX_FILENAME_LENGTH = 100;
 var reRelativePath = /^\.+(\\|\/)|^\.+$/;
 var reTrailingPeriods = /\.+$/;
@@ -10,7 +9,7 @@ function filenamify(string, options = {}) {
     throw new TypeError("Expected a string");
   }
   const replacement = options.replacement === void 0 ? "!" : options.replacement;
-  if (_filenamereservedregex2.default.call(void 0, ).test(replacement) && reControlChars.test(replacement)) {
+  if (/[<>:"/\\|?*\u0000-\u001F]/g.test(replacement) && reControlChars.test(replacement)) {
     throw new Error("Replacement string cannot contain reserved filename characters");
   }
   if (replacement.length > 0) {
@@ -18,7 +17,7 @@ function filenamify(string, options = {}) {
   }
   string = string.normalize("NFD");
   string = string.replace(reRelativePath, replacement);
-  string = string.replace(_filenamereservedregex2.default.call(void 0, ), replacement);
+  string = string.replace(/[<>:"/\\|?*\u0000-\u001F]/g, replacement);
   string = string.replace(reControlChars, replacement);
   string = string.replace(reTrailingPeriods, "");
   if (replacement.length > 0) {
@@ -30,7 +29,7 @@ function filenamify(string, options = {}) {
       string += replacement;
     }
   }
-  string = _filenamereservedregex.windowsReservedNameRegex.call(void 0, ).test(string) ? string + replacement : string;
+  string = /^(con|prn|aux|nul|com\d|lpt\d)$/i.test(string) ? string + replacement : string;
   const allowedLength = typeof options.maxLength === "number" ? options.maxLength : MAX_FILENAME_LENGTH;
   if (string.length > allowedLength) {
     const extensionIndex = string.lastIndexOf(".");
