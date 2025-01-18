@@ -10,7 +10,6 @@
 		"email": "sindresorhus@gmail.com",
 		"url": "https://sindresorhus.com"
 	},
-	"type": "module",
 	"exports": {
 		".": "./index.js",
 		"./browser": "./filenamify.js"
