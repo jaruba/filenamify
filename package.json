@@ -10,24 +10,19 @@
 		"email": "sindresorhus@gmail.com",
 		"url": "https://sindresorhus.com"
 	},
-	"exports": {
-		".": "./index.js",
-		"./browser": "./filenamify.js"
-	},
+	"main": "./dist/index.cjs",
+	"module": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"files": [
+		"dist"
+	],
 	"engines": {
 		"node": ">=16"
 	},
 	"scripts": {
+		"build": "tsup",
 		"test": "xo && ava && tsd"
 	},
-	"files": [
-		"filenamify-path.d.ts",
-		"filenamify-path.js",
-		"filenamify.d.ts",
-		"filenamify.js",
-		"index.d.ts",
-		"index.js"
-	],
 	"keywords": [
 		"filename",
 		"safe",
@@ -41,12 +36,22 @@
 		"valid",
 		"dirname"
 	],
+	"type": "module",
 	"dependencies": {
 		"filename-reserved-regex": "^3.0.0"
 	},
 	"devDependencies": {
 		"ava": "^5.2.0",
 		"tsd": "^0.28.1",
-		"xo": "^0.54.1"
+		"xo": "^0.54.1",
+		"tsup": "^8.0.2",
+		"typescript": "5.3.3"
+	},
+	"exports": {
+		"import": {
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.js"
+		},
+		"require": "./dist/index.cjs"
 	}
 }
