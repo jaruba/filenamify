@@ -37,9 +37,6 @@
 		"dirname"
 	],
 	"type": "module",
-	"dependencies": {
-		"filename-reserved-regex": "^3.0.0"
-	},
 	"devDependencies": {
 		"ava": "^5.2.0",
 		"tsd": "^0.28.1",

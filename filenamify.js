@@ -1,5 +1,3 @@
-import filenameReservedRegex, {windowsReservedNameRegex} from 'filename-reserved-regex';
-
 // Doesn't make sense to have longer filenames
 const MAX_FILENAME_LENGTH = 100;
 
@@ -16,7 +14,7 @@ export default function filenamify(string, options = {}) {
 
 	const replacement = options.replacement === undefined ? '!' : options.replacement;
 
-	if (filenameReservedRegex().test(replacement) && reControlChars.test(replacement)) {
+	if (/[<>:"/\\|?*\u0000-\u001F]/g.test(replacement) && reControlChars.test(replacement)) {
 		throw new Error('Replacement string cannot contain reserved filename characters');
 	}
 
@@ -26,7 +24,7 @@ export default function filenamify(string, options = {}) {
 
 	string = string.normalize('NFD');
 	string = string.replace(reRelativePath, replacement);
-	string = string.replace(filenameReservedRegex(), replacement);
+	string = string.replace(/[<>:"/\\|?*\u0000-\u001F]/g, replacement);
 	string = string.replace(reControlChars, replacement);
 	string = string.replace(reTrailingPeriods, '');
 
@@ -44,7 +42,7 @@ export default function filenamify(string, options = {}) {
 		}
 	}
 
-	string = windowsReservedNameRegex().test(string) ? string + replacement : string;
+	string = /^(con|prn|aux|nul|com\d|lpt\d)$/i.test(string) ? string + replacement : string;
 	const allowedLength = typeof options.maxLength === 'number' ? options.maxLength : MAX_FILENAME_LENGTH;
 	if (string.length > allowedLength) {
 		const extensionIndex = string.lastIndexOf('.');
